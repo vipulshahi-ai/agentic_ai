@@ -225,6 +225,7 @@ body {
 .main-content {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 3.5rem 4rem 3.5rem 5rem;
     scroll-behavior: smooth;
     width: 100%;
@@ -235,6 +236,7 @@ body {
     max-width: 960px;
     margin: 0 auto;
     animation: fadeIn 0.5s ease-out;
+    overflow: hidden;
 }
 .level.active { display: block; }
 
@@ -746,22 +748,22 @@ body {
    COMPONENT: Code Cards
    ═══════════════════════════════════════════ */
 .code-card {
-    background: #1a1a1a;
+    background: #ffffff;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: var(--shadow-lg);
     margin: 1.5rem 0;
-    border: 1px solid #333;
+    border: 1px solid #d1d5db;
 }
 
 .code-card-header {
     padding: 0.7rem 1.5rem;
-    background: #252525;
-    border-bottom: 1px solid #3a3a3a;
+    background: #f3f4f6;
+    border-bottom: 1px solid #d1d5db;
 }
 
 .code-card-header span {
-    color: #999;
+    color: #6b7280;
     font-size: 0.78rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -773,23 +775,25 @@ body {
     font-size: 0.88rem;
     line-height: 1.7;
     padding: 1.5rem !important;
-    color: #e0e0e0;
+    color: #1f2937;
     white-space: pre;
     overflow-x: auto;
+    background: #ffffff;
+    border-radius: 12px;
 }
 
 .code-block::-webkit-scrollbar { height: 6px; }
-.code-block::-webkit-scrollbar-track { background: #1a1a1a; }
-.code-block::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+.code-block::-webkit-scrollbar-track { background: #f3f4f6; }
+.code-block::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 3px; }
 
-/* Syntax Highlighting — Greyscale */
-.c-keyword { color: #ccc; font-weight: 700; }
-.c-func { color: #bbb; }
-.c-comment { color: #666; font-style: italic; }
-.c-string { color: #aaa; }
-.c-value { color: #ddd; }
-.c-type { color: #b0b0b0; }
-.c-decorator { color: #d0d0d0; font-weight: 700; }
+/* Syntax Highlighting — Dark on Light */
+.c-keyword { color: #7c3aed; font-weight: 700; }
+.c-func { color: #2563eb; }
+.c-comment { color: #6b7280; font-style: italic; }
+.c-string { color: #059669; }
+.c-value { color: #d97706; }
+.c-type { color: #0891b2; }
+.c-decorator { color: #9333ea; font-weight: 700; }
 
 /* ═══════════════════════════════════════════
    COMPONENT: Analogy Grid
@@ -2185,6 +2189,77 @@ body {
     z-index: 150;
 }
 .sidebar-overlay.visible { display: block; }
+
+/* ═══════════════════════════════════════════
+   LEVEL 10: Framework Expand Cards
+   ═══════════════════════════════════════════ */
+.framework-expand-card {
+    background: var(--white);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.framework-expand-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: #999;
+}
+
+.framework-expand-card.active-card {
+    border-color: #555;
+    box-shadow: var(--shadow-lg);
+}
+
+.framework-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1.8rem;
+    border-left: 6px solid;
+}
+
+.framework-card-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.framework-card-arrow {
+    margin-left: auto;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #999;
+    transition: transform 0.3s ease;
+}
+
+.framework-expand-card.active-card .framework-card-arrow {
+    transform: rotate(90deg);
+    color: #333;
+}
+
+
+.framework-panel {
+    display: none;
+    margin-top: 2rem;
+}
+
+.framework-panel[style*="display: block"],
+.framework-panel[style*="display:block"] {
+    animation: fadeSlideIn 0.4s ease-out;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 /* ═══════════════════════════════════════════
    SCROLLBAR STYLING

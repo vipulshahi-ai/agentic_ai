@@ -2376,54 +2376,523 @@ result = graph.<span class="c-func">invoke</span>(initial_state)
                     <h3>From Console to Web App</h3>
                     <p>So far, all our LangGraph Agents have run directly inside the Python console. But real users don't use terminal environments—they use websites!</p>
                     <p>Instead of manually writing HTML, CSS, JavaScript, and complex web servers, AI developers use <strong>Rapid Prototyping Tools</strong> like Streamlit and Gradio. These tools convert pure Python variables directly into front-end visual elements instantly.</p>
+                    <p style="margin-top: 0.8rem;">Click each framework below to explore its full capabilities:</p>
                 </div>
 
-                <div class="intuition-card" style="margin-top: 1.5rem; border-left-color: #8b5cf6;">
-                    <h3>Streamlit vs. Gradio: The Showdown</h3>
-                    <p>The two most popular frameworks serve slightly different purposes. Let's look at the syntax:</p>
-                    
-                    <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
-                        <div style="flex: 1; min-width: 300px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.5rem;">
-                            <h4 style="color: #ef4444; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <span style="font-size: 1.5rem;">🎈</span> Streamlit
-                            </h4>
-                            <p style="font-size: 0.85rem; color: #64748b;">Best for structured data dashboards and complex layouts.</p>
-                            <div class="code-block" style="margin-top:1rem; font-size: 0.85rem;">
-<span class="c-keyword">import</span> streamlit <span class="c-keyword">as</span> st
+                <!-- ═══════ TWO CLICKABLE FRAMEWORK SECTIONS ═══════ -->
+                <div style="display: flex; gap: 1.5rem; margin-top: 2rem; flex-wrap: wrap;">
+
+                    <!-- ─── STREAMLIT CARD ─── -->
+                    <div class="framework-expand-card" style="flex: 1; min-width: 300px;" id="card-streamlit" onclick="toggleFrameworkPanel('streamlit')">
+                        <div class="framework-card-header" style="border-color: #ef4444;">
+                            <span class="framework-card-icon" style="font-size:1.5rem; font-weight:800; color:#ef4444; font-family:'Outfit',sans-serif;">ST</span>
+                            <div>
+                                <h3 style="color: #ef4444; margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.4rem;">Streamlit</h3>
+                                <p style="color: #64748b; font-size: 0.85rem; margin-top: 0.2rem;">Dashboards, widgets, sidebars</p>
+                            </div>
+                            <span class="framework-card-arrow" id="arrow-streamlit">▸</span>
+                        </div>
+                    </div>
+
+                    <!-- ─── GRADIO CARD ─── -->
+                    <div class="framework-expand-card" style="flex: 1; min-width: 300px;" id="card-gradio" onclick="toggleFrameworkPanel('gradio')">
+                        <div class="framework-card-header" style="border-color: #f97316;">
+                            <span class="framework-card-icon" style="font-size:1.5rem; font-weight:800; color:#f97316; font-family:'Outfit',sans-serif;">GR</span>
+                            <div>
+                                <h3 style="color: #f97316; margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.4rem;">Gradio</h3>
+                                <p style="color: #64748b; font-size: 0.85rem; margin-top: 0.2rem;">Fast AI model demos, Input → Output</p>
+                            </div>
+                            <span class="framework-card-arrow" id="arrow-gradio">▸</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════ -->
+                <!--  STREAMLIT EXPANDED PANEL                      -->
+                <!-- ═══════════════════════════════════════════════ -->
+                <div class="framework-panel" id="panel-streamlit" style="display:none;">
+
+                    <!-- Intro -->
+                    <div class="intuition-card" style="border-left-color: #ef4444;">
+                        <h3>What is Streamlit?</h3>
+                        <p><strong>Streamlit</strong> is a Python-first framework that transforms your Python scripts into shareable, interactive web applications — <em>with zero front-end experience required</em>.</p>
+                        <p style="margin-top: 0.8rem;">It works top-to-bottom: every <code>st.xxx()</code> call writes a UI element directly onto the page. Every time a user interacts (clicks a button, moves a slider), the <strong>entire script re-runs from top</strong>.</p>
+                        <div class="observation-panel" style="margin-top: 1rem;">
+                            <strong>Key Streamlit Concepts:</strong>
+                            <ul class="line-by-line-list">
+                                <li><strong>Widgets:</strong> <code>st.text_input()</code>, <code>st.button()</code>, <code>st.slider()</code>, <code>st.selectbox()</code>, <code>st.checkbox()</code>, <code>st.radio()</code></li>
+                                <li><strong>Display:</strong> <code>st.title()</code>, <code>st.header()</code>, <code>st.subheader()</code>, <code>st.text()</code>, <code>st.write()</code>, <code>st.code()</code></li>
+                                <li><strong>Feedback:</strong> <code>st.success()</code>, <code>st.warning()</code>, <code>st.info()</code>, <code>st.error()</code></li>
+                                <li><strong>Layout:</strong> <code>st.sidebar</code>, <code>st.columns()</code>, <code>st.expander()</code></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Example 1: Complete Streamlit Demo -->
+                    <div class="intuition-card" style="border-left-color: #dc2626; margin-top: 1.5rem;">
+                        <h3>Example 1: Complete Streamlit Demo</h3>
+                        <p>This single script showcases all major Streamlit widgets — titles, alerts, checkboxes, radio buttons, select boxes, buttons, and sidebar:</p>
+
+                        <div class="code-card" style="margin-top: 1.5rem;">
+                            <div class="code-card-header"><span>Python — streamlit_demo.py</span></div>
+                            <div class="code-block"><span class="c-keyword">import</span> streamlit <span class="c-keyword">as</span> st
+
+st.<span class="c-func">title</span>(<span class="c-string">"Streamlit Demo by Bipul"</span>)
+
+st.<span class="c-func">header</span>(<span class="c-string">"Header for the App"</span>)
+
+st.<span class="c-func">subheader</span>(<span class="c-string">"Sub-Header of the app"</span>)
+
+st.<span class="c-func">text</span>(<span class="c-string">"This is a example Text"</span>)
+
+st.<span class="c-func">success</span>(<span class="c-string">"Success"</span>)
+st.<span class="c-func">warning</span>(<span class="c-string">"Warning"</span>)
+st.<span class="c-func">info</span>(<span class="c-string">"Information"</span>)
+st.<span class="c-func">error</span>(<span class="c-string">"Error"</span>)
+
+<span class="c-comment">#Checkbox</span>
+<span class="c-keyword">if</span> st.<span class="c-func">checkbox</span>(<span class="c-string">"Select/Unselect"</span>):
+    st.<span class="c-func">text</span>(<span class="c-string">"User selected the checkbox"</span>)
+<span class="c-keyword">else</span>:
+    st.<span class="c-func">text</span>(<span class="c-string">"User has not selected the checkbox"</span>)
+
+<span class="c-comment">#Radio Button</span>
+state = st.<span class="c-func">radio</span>(<span class="c-string">"What is your favorite color?"</span> , (<span class="c-string">"Red"</span>,<span class="c-string">"Green"</span>,<span class="c-string">"Blue"</span>))
+
+<span class="c-keyword">if</span> state == <span class="c-string">'Green'</span>:
+    st.<span class="c-func">success</span>(<span class="c-string">"That is my favorite color as well"</span>)
+
+<span class="c-comment">#SelectBox</span>
+occupation = st.<span class="c-func">selectbox</span>(<span class="c-string">"What do you do?"</span> , [<span class="c-string">"Student"</span>,<span class="c-string">"Vlogger"</span>,<span class="c-string">"Engineer"</span>])
+st.<span class="c-func">text</span>(<span class="c-keyword">f</span><span class="c-string">"Selected option is {occupation}"</span>)
+
+<span class="c-comment">#Button</span>
+<span class="c-keyword">if</span> st.<span class="c-func">button</span>(<span class="c-string">"Example Button"</span>):
+    st.<span class="c-func">success</span>(<span class="c-string">"You clicked it"</span>)
+
+
+<span class="c-comment">#Sidebar</span>
+st.sidebar.<span class="c-func">header</span>(<span class="c-string">"Heading of Sidebar"</span>)
+st.sidebar.<span class="c-func">text</span>(<span class="c-string">"MLOPs by FunctionUP"</span>)</div>
+                        </div>
+
+                        <!-- Line-by-line breakdown -->
+                        <div class="observation-panel" style="margin-top: 1.5rem;">
+                            <strong>Line-by-Line Breakdown:</strong>
+                            <ul class="line-by-line-list" style="margin-top: 0.5rem;">
+                                <li><code>st.title()</code>, <code>st.header()</code>, <code>st.subheader()</code> → Display headings in decreasing size, just like H1/H2/H3 in HTML.</li>
+                                <li><code>st.text()</code> → Renders a plain, fixed-width text line.</li>
+                                <li><code>st.success()</code>, <code>st.warning()</code>, <code>st.info()</code>, <code>st.error()</code> → Colored alert boxes for user feedback.</li>
+                                <li><code>st.checkbox()</code> → Returns <code>True</code>/<code>False</code>. Combined with <code>if/else</code>, it creates conditional UI.</li>
+                                <li><code>st.radio()</code> → Renders a group of radio buttons. Returns the selected option.</li>
+                                <li><code>st.selectbox()</code> → Renders a dropdown menu. Returns the chosen value.</li>
+                                <li><code>st.button()</code> → Returns <code>True</code> only when clicked, triggering the <code>if</code> block.</li>
+                                <li><code>st.sidebar.xxx()</code> → Places any widget inside a collapsible left sidebar!</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Example 2: Minimal Quick Start -->
+                    <div class="intuition-card" style="border-left-color: #f59e0b; margin-top: 1.5rem;">
+                        <h3>Example 2: Quick Start — Minimal App</h3>
+                        <p>The simplest possible Streamlit app in 4 lines:</p>
+
+                        <div class="code-card" style="margin-top: 1rem;">
+                            <div class="code-card-header"><span>Python — hello_app.py</span></div>
+                            <div class="code-block"><span class="c-keyword">import</span> streamlit <span class="c-keyword">as</span> st
 
 st.<span class="c-func">title</span>(<span class="c-string">"Simple App"</span>)
 user_text = st.<span class="c-func">text_area</span>(<span class="c-string">"Enter text"</span>)
 
 <span class="c-keyword">if</span> st.<span class="c-func">button</span>(<span class="c-string">"Analyze"</span>):
-    st.<span class="c-func">write</span>(<span class="c-keyword">f</span><span class="c-string">"You typed: {user_text}"</span>)
-                            </div>
+    st.<span class="c-func">write</span>(<span class="c-keyword">f</span><span class="c-string">"You typed: {user_text}"</span>)</div>
                         </div>
-                        
-                        <div style="flex: 1; min-width: 300px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.5rem;">
-                            <h4 style="color: #f97316; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                                <span style="font-size: 1.5rem;">⚡</span> Gradio
-                            </h4>
-                            <p style="font-size: 0.85rem; color: #64748b;">Best for extremely fast intuitive AI model demoing using pure Input/Output.</p>
-                            <div class="code-block" style="margin-top:1rem; font-size: 0.85rem;">
-<span class="c-keyword">import</span> gradio <span class="c-keyword">as</span> gr
 
-<span class="c-keyword">def</span> <span class="c-func">analyze</span>(text):
-    <span class="c-keyword">return</span> <span class="c-keyword">f</span><span class="c-string">"You typed: {text}"</span>
-
-app = gr.<span class="c-func">Interface</span>(
-    fn=analyze,
-    inputs=<span class="c-string">"text"</span>,
-    outputs=<span class="c-string">"text"</span>
-)
-app.<span class="c-func">launch</span>()
-                            </div>
+                        <div class="insight-card" style="margin-top: 1rem; margin-bottom: 0;">
+                            <span class="gold-accent">How to run:</span> Save the file, open terminal, and run: <code>streamlit run hello_app.py</code> — it opens in your browser instantly!
                         </div>
                     </div>
+
+                    <!-- Example 3: st.write, st.slider, st.code -->
+                    <div class="intuition-card" style="border-left-color: #0ea5e9; margin-top: 1.5rem;">
+                        <h3>Example 3: Smart Display — write(), slider(), code()</h3>
+                        <p><code>st.write()</code> is Streamlit's <strong>Swiss Army knife</strong> — it auto-detects the data type (string, number, DataFrame, chart) and renders it appropriately. <code>st.slider()</code> creates an interactive range selector, and <code>st.code()</code> displays syntax-highlighted code blocks.</p>
+
+                        <div class="code-card" style="margin-top: 1rem;">
+                            <div class="code-card-header"><span>Python — smart_display.py</span></div>
+                            <div class="code-block"><span class="c-keyword">import</span> streamlit <span class="c-keyword">as</span> st
+
+st.<span class="c-func">title</span>(<span class="c-string">"Smart Display Demo"</span>)
+
+<span class="c-comment"># st.write() — the Swiss Army Knife</span>
+st.<span class="c-func">write</span>(<span class="c-string">"Hello, this is **Markdown** rendered automatically!"</span>)
+st.<span class="c-func">write</span>(<span class="c-value">42</span>)                  <span class="c-comment"># Numbers work too</span>
+st.<span class="c-func">write</span>({<span class="c-string">"name"</span>: <span class="c-string">"Bipul"</span>, <span class="c-string">"role"</span>: <span class="c-string">"Instructor"</span>})  <span class="c-comment"># Dicts as tables</span>
+
+<span class="c-comment"># st.slider() — interactive range selector</span>
+age = st.<span class="c-func">slider</span>(<span class="c-string">"Select your age"</span>, <span class="c-value">0</span>, <span class="c-value">100</span>, <span class="c-value">25</span>)
+st.<span class="c-func">write</span>(<span class="c-keyword">f</span><span class="c-string">"Your age is: {age}"</span>)
+
+temperature = st.<span class="c-func">slider</span>(<span class="c-string">"LLM Temperature"</span>, <span class="c-value">0.0</span>, <span class="c-value">2.0</span>, <span class="c-value">0.7</span>, step=<span class="c-value">0.1</span>)
+st.<span class="c-func">write</span>(<span class="c-keyword">f</span><span class="c-string">"Temperature set to: {temperature}"</span>)
+
+<span class="c-comment"># st.code() — syntax-highlighted code display</span>
+st.<span class="c-func">code</span>(<span class="c-string">"""
+def greet(name):
+    return f"Hello {name}!"
+
+print(greet("World"))
+"""</span>, language=<span class="c-string">"python"</span>)</div>
+                        </div>
+
+                        <div class="observation-panel" style="margin-top: 1rem;">
+                            <strong>Key Differences:</strong>
+                            <ul class="line-by-line-list" style="margin-top: 0.5rem;">
+                                <li><code>st.write()</code> → Auto-detects type: strings render as Markdown, dicts/lists render as tables, DataFrames render as interactive grids.</li>
+                                <li><code>st.text()</code> → Always renders plain, fixed-width text (no formatting).</li>
+                                <li><code>st.slider("Label", min, max, default)</code> → Returns the selected number. Supports <code>int</code> and <code>float</code> ranges with a <code>step</code> parameter.</li>
+                                <li><code>st.code(code_string, language="python")</code> → Renders a read-only, syntax-highlighted code block. Perfect for showing users example code!</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Example 4: st.columns, st.expander -->
+                    <div class="intuition-card" style="border-left-color: #8b5cf6; margin-top: 1.5rem;">
+                        <h3>Example 4: Layouts — columns() & expander()</h3>
+                        <p>By default Streamlit renders everything in a single column, top to bottom. But <code>st.columns()</code> creates side-by-side layouts, and <code>st.expander()</code> creates collapsible sections — crucial for building real dashboards.</p>
+
+                        <div class="code-card" style="margin-top: 1rem;">
+                            <div class="code-card-header"><span>Python — layout_demo.py</span></div>
+                            <div class="code-block"><span class="c-keyword">import</span> streamlit <span class="c-keyword">as</span> st
+
+st.<span class="c-func">title</span>(<span class="c-string">"Layout Demo"</span>)
+
+<span class="c-comment"># ─── st.columns() — side-by-side layout ───</span>
+col1, col2, col3 = st.<span class="c-func">columns</span>(<span class="c-value">3</span>)
+
+<span class="c-keyword">with</span> col1:
+    st.<span class="c-func">header</span>(<span class="c-string">"Column 1"</span>)
+    st.<span class="c-func">write</span>(<span class="c-string">"This is the left column."</span>)
+    st.<span class="c-func">image</span>(<span class="c-string">"https://placekitten.com/200/200"</span>)
+
+<span class="c-keyword">with</span> col2:
+    st.<span class="c-func">header</span>(<span class="c-string">"Column 2"</span>)
+    st.<span class="c-func">write</span>(<span class="c-string">"This is the middle column."</span>)
+    user_name = st.<span class="c-func">text_input</span>(<span class="c-string">"Your name"</span>)
+
+<span class="c-keyword">with</span> col3:
+    st.<span class="c-func">header</span>(<span class="c-string">"Column 3"</span>)
+    st.<span class="c-func">write</span>(<span class="c-string">"This is the right column."</span>)
+    st.<span class="c-func">metric</span>(<span class="c-string">"Users"</span>, <span class="c-value">1200</span>, <span class="c-string">"+15%"</span>)
+
+<span class="c-comment"># ─── st.expander() — collapsible section ───</span>
+<span class="c-keyword">with</span> st.<span class="c-func">expander</span>(<span class="c-string">"Click to see more details"</span>):
+    st.<span class="c-func">write</span>(<span class="c-string">"This content is hidden by default!"</span>)
+    st.<span class="c-func">write</span>(<span class="c-string">"Users can expand it to read more."</span>)
+    st.<span class="c-func">code</span>(<span class="c-string">"print('Hidden code revealed!')"</span>)
+
+<span class="c-keyword">with</span> st.<span class="c-func">expander</span>(<span class="c-string">"Advanced Settings"</span>):
+    st.<span class="c-func">slider</span>(<span class="c-string">"Max Tokens"</span>, <span class="c-value">100</span>, <span class="c-value">4096</span>, <span class="c-value">512</span>)
+    st.<span class="c-func">slider</span>(<span class="c-string">"Temperature"</span>, <span class="c-value">0.0</span>, <span class="c-value">2.0</span>, <span class="c-value">0.7</span>)
+    st.<span class="c-func">checkbox</span>(<span class="c-string">"Stream output"</span>)</div>
+                        </div>
+
+                        <div class="observation-panel" style="margin-top: 1rem;">
+                            <strong>Layout Breakdown:</strong>
+                            <ul class="line-by-line-list" style="margin-top: 0.5rem;">
+                                <li><code>st.columns(N)</code> → Creates N equally-sized columns. Use <code>with col:</code> to place widgets inside each column.</li>
+                                <li><code>st.columns([2, 1])</code> → You can also pass a list of ratios for unequal widths (2:1 split).</li>
+                                <li><code>st.expander("Title")</code> → Creates a collapsible container. Content inside is hidden by default — great for advanced settings, FAQs, or extra details.</li>
+                                <li>Combine these with <code>st.sidebar</code> (from Example 1) for professional multi-panel dashboards!</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Streamlit widget cheat sheet -->
+                    <div class="intuition-card" style="border-left-color: #6366f1; margin-top: 1.5rem;">
+                        <h3>Streamlit Widget Cheat Sheet</h3>
+                        <table class="comparison-table" style="margin-top: 1rem;">
+                            <thead>
+                                <tr>
+                                    <th>Widget</th>
+                                    <th>Code</th>
+                                    <th>Returns</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Text Input</td><td><code>st.text_input("Label")</code></td><td>String</td></tr>
+                                <tr><td>Text Area</td><td><code>st.text_area("Label")</code></td><td>String</td></tr>
+                                <tr><td>Number</td><td><code>st.number_input("Label")</code></td><td>Number</td></tr>
+                                <tr><td>Slider</td><td><code>st.slider("Label", 0, 100)</code></td><td>Number</td></tr>
+                                <tr><td>Checkbox</td><td><code>st.checkbox("Label")</code></td><td>Boolean</td></tr>
+                                <tr><td>Radio</td><td><code>st.radio("Label", ["A","B"])</code></td><td>String</td></tr>
+                                <tr><td>Selectbox</td><td><code>st.selectbox("Label", [...])</code></td><td>String</td></tr>
+                                <tr><td>Button</td><td><code>st.button("Click me")</code></td><td>Boolean</td></tr>
+                                <tr><td>File Upload</td><td><code>st.file_uploader("Upload")</code></td><td>File object</td></tr>
+                            </tbody>
+                        </table>
+
+                        <h4 style="margin-top: 1.5rem; color: var(--text-headings);">Display & Output</h4>
+                        <table class="comparison-table" style="margin-top: 0.5rem;">
+                            <thead>
+                                <tr>
+                                    <th>Function</th>
+                                    <th>Code</th>
+                                    <th>Purpose</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Write (auto)</td><td><code>st.write(anything)</code></td><td>Renders any data type intelligently</td></tr>
+                                <tr><td>Code Block</td><td><code>st.code(code, language="python")</code></td><td>Syntax-highlighted code display</td></tr>
+                                <tr><td>Title</td><td><code>st.title("My App")</code></td><td>Large H1 heading</td></tr>
+                                <tr><td>Markdown</td><td><code>st.markdown("**bold**")</code></td><td>Render rich Markdown text</td></tr>
+                            </tbody>
+                        </table>
+
+                        <h4 style="margin-top: 1.5rem; color: var(--text-headings);">Layout</h4>
+                        <table class="comparison-table" style="margin-top: 0.5rem;">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Code</th>
+                                    <th>Purpose</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Columns</td><td><code>st.columns(3)</code></td><td>Side-by-side layout (3 equal cols)</td></tr>
+                                <tr><td>Expander</td><td><code>st.expander("Title")</code></td><td>Collapsible section</td></tr>
+                                <tr><td>Sidebar</td><td><code>st.sidebar.widget()</code></td><td>Left panel for navigation/settings</td></tr>
+                                <tr><td>Tabs</td><td><code>st.tabs(["Tab1","Tab2"])</code></td><td>Tabbed interface</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button class="action-btn" style="margin-top: 1.5rem; background: #374151;" onclick="toggleFrameworkPanel('streamlit')">
+                        Collapse Streamlit Section
+                    </button>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════ -->
+                <!--  GRADIO EXPANDED PANEL                         -->
+                <!-- ═══════════════════════════════════════════════ -->
+                <div class="framework-panel" id="panel-gradio" style="display:none;">
+
+                    <!-- Intro -->
+                    <div class="intuition-card" style="border-left-color: #f97316;">
+                        <h3>What is Gradio?</h3>
+                        <p><strong>Gradio</strong> is a Python library that builds interactive AI demos in seconds. Its philosophy is radically simple: write a Python function, and Gradio auto-generates a beautiful web UI around it.</p>
+                        <p style="margin-top: 0.8rem;">Everything revolves around <strong>one core concept</strong>: <code>gr.Interface(fn, inputs, outputs)</code></p>
+                        <div class="observation-panel" style="margin-top: 1rem;">
+                            <strong>Key Gradio Concepts:</strong>
+                            <ul class="line-by-line-list">
+                                <li><strong>fn:</strong> Your Python function — any computation, LLM call, image model, etc.</li>
+                                <li><strong>inputs:</strong> The UI components that capture user input — <code>gr.Textbox()</code>, <code>gr.Number()</code>, <code>gr.Slider()</code>, <code>gr.Image()</code></li>
+                                <li><strong>outputs:</strong> The UI components that display the result — <code>gr.Textbox()</code>, <code>gr.Image()</code>, <code>gr.Audio()</code></li>
+                                <li><strong>launch():</strong> Starts the local web server and opens the UI in your browser.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Example 1: Basic Greeter -->
+                    <div class="intuition-card" style="border-left-color: #ea580c; margin-top: 1.5rem;">
+                        <h3>Example 1: Hello World Greeter</h3>
+                        <p>The simplest Gradio app — one function, one input, one output:</p>
+
+                        <div class="code-card" style="margin-top: 1rem;">
+                            <div class="code-card-header"><span>Python — greeter.py</span></div>
+                            <div class="code-block"><span class="c-keyword">import</span> gradio <span class="c-keyword">as</span> gr
+
+<span class="c-comment"># 1. The Logic: A simple function</span>
+<span class="c-keyword">def</span> <span class="c-func">greet</span>(name):
+    <span class="c-keyword">return</span> <span class="c-keyword">f</span><span class="c-string">"Hello {name}! Welcome to Gradio."</span>
+
+<span class="c-comment"># 2. The Interface: Connecting the function to the UI</span>
+demo = gr.<span class="c-func">Interface</span>(fn=greet, inputs=<span class="c-string">"text"</span>, outputs=<span class="c-string">"text"</span>)
+
+<span class="c-comment"># 3. The Launch: Starting the server</span>
+demo.<span class="c-func">launch</span>()</div>
+                        </div>
+
+                        <div class="observation-panel" style="margin-top: 1rem;">
+                            <strong>What's happening:</strong>
+                            <ul class="line-by-line-list">
+                                <li><code>fn=greet</code> → Gradio will call this function when the user clicks "Submit".</li>
+                                <li><code>inputs="text"</code> → Auto-creates a Textbox for user input.</li>
+                                <li><code>outputs="text"</code> → Auto-creates a Textbox to display the result.</li>
+                                <li><code>demo.launch()</code> → Opens a local web server at <code>http://127.0.0.1:7860</code></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Example 2: Custom Components -->
+                    <div class="intuition-card" style="border-left-color: #d97706; margin-top: 1.5rem;">
+                        <h3>Example 2: Custom Textbox Components</h3>
+                        <p>Instead of the shorthand <code>"text"</code>, use explicit <code>gr.Textbox()</code> to add labels, placeholders, and descriptions:</p>
+
+                        <div class="code-card" style="margin-top: 1rem;">
+                            <div class="code-card-header"><span>Python — text_reverser.py</span></div>
+                            <div class="code-block"><span class="c-keyword">import</span> gradio <span class="c-keyword">as</span> gr
+
+<span class="c-keyword">def</span> <span class="c-func">reverse_text</span>(text):
+    <span class="c-keyword">return</span> text[::<span class="c-value">-1</span>]
+
+demo = gr.<span class="c-func">Interface</span>(
+    fn=reverse_text,
+    inputs=gr.<span class="c-func">Textbox</span>(label=<span class="c-string">"Type something here"</span>, placeholder=<span class="c-string">"e.g. Gradio is cool"</span>),
+    outputs=gr.<span class="c-func">Textbox</span>(label=<span class="c-string">"Mirror Image"</span>),
+    title=<span class="c-string">"Text Reverser App"</span>,
+    description=<span class="c-string">"This app demonstrates how to use custom Textbox components."</span>
+)
+
+demo.<span class="c-func">launch</span>()</div>
+                        </div>
+                    </div>
+
+                    <!-- Example 3: Multiple I/O -->
+                    <div class="intuition-card" style="border-left-color: #16a34a; margin-top: 1.5rem;">
+                        <h3>Example 3: Multiple Inputs & Outputs</h3>
+                        <p>Gradio supports <strong>lists</strong> of inputs and outputs. Each element maps to a function parameter/return value:</p>
+
+                        <div class="code-card" style="margin-top: 1rem;">
+                            <div class="code-card-header"><span>Python — tip_calculator.py</span></div>
+                            <div class="code-block"><span class="c-keyword">import</span> gradio <span class="c-keyword">as</span> gr
+
+<span class="c-keyword">def</span> <span class="c-func">calculate_tip</span>(bill_amount, tip_percentage):
+    tip = bill_amount * (tip_percentage / <span class="c-value">100</span>)
+    total = bill_amount + tip
+    <span class="c-keyword">return</span> <span class="c-keyword">f</span><span class="c-string">"Tip Amount: ${tip:.2f}"</span>, <span class="c-keyword">f</span><span class="c-string">"Total Bill: ${total:.2f}"</span>
+
+demo = gr.<span class="c-func">Interface</span>(
+    fn=calculate_tip,
+    <span class="c-comment"># Pass a LIST of inputs</span>
+    inputs=[
+        gr.<span class="c-func">Number</span>(label=<span class="c-string">"Bill Amount ($)"</span>),
+        gr.<span class="c-func">Slider</span>(minimum=<span class="c-value">0</span>, maximum=<span class="c-value">30</span>, value=<span class="c-value">15</span>, label=<span class="c-string">"Tip %"</span>)
+    ],
+    <span class="c-comment"># Pass a LIST of outputs</span>
+    outputs=[
+        gr.<span class="c-func">Textbox</span>(label=<span class="c-string">"Tip"</span>),
+        gr.<span class="c-func">Textbox</span>(label=<span class="c-string">"Total"</span>)
+    ],
+    title=<span class="c-string">"Tip Calculator"</span>
+)
+
+demo.<span class="c-func">launch</span>()</div>
+                        </div>
+
+                        <div class="observation-panel" style="margin-top: 1rem;">
+                            <strong>Key insight:</strong> The number of inputs/outputs MUST match the function signature. <code>calculate_tip</code> takes <strong>2</strong> parameters and returns <strong>2</strong> values — so we pass 2 inputs and 2 outputs.
+                        </div>
+                    </div>
+
+                    <!-- Example 4: LLM Integration -->
+                    <div class="intuition-card" style="border-left-color: #7c3aed; margin-top: 1.5rem;">
+                        <h3>Example 4: Gradio + LLM Integration</h3>
+                        <p>The real power — connecting a <strong>Generative AI model</strong> to a Gradio interface for a one-click text summarizer:</p>
+
+                        <div class="code-card" style="margin-top: 1rem;">
+                            <div class="code-card-header"><span>Python — genai_summarizer.py</span></div>
+                            <div class="code-block"><span class="c-keyword">import</span> gradio <span class="c-keyword">as</span> gr
+<span class="c-keyword">from</span> langchain_google_genai <span class="c-keyword">import</span> ChatGoogleGenerativeAI
+<span class="c-keyword">import</span> os
+
+<span class="c-comment"># 1. SETUP</span>
+os.environ[<span class="c-string">'GOOGLE_API_KEY'</span>] = <span class="c-string">'Your Gemini API Key'</span>
+<span class="c-comment"># generate API key from https://aistudio.google.com/api-keys</span>
+
+llm = <span class="c-func">ChatGoogleGenerativeAI</span>(model=<span class="c-string">'gemini-2.5-flash'</span>)
+
+<span class="c-keyword">def</span> <span class="c-func">generate_insights</span>(text):
+    <span class="c-keyword">if</span> <span class="c-keyword">not</span> text <span class="c-keyword">or</span> <span class="c-keyword">not</span> text.<span class="c-func">strip</span>():
+        <span class="c-keyword">return</span> <span class="c-string">"Please enter some text."</span>, <span class="c-string">""</span>
+
+    prompt = (
+        <span class="c-keyword">f</span><span class="c-string">"Analyze the following text.\n"</span>
+        <span class="c-keyword">f</span><span class="c-string">"Line 1: Provide a concise summary.\n"</span>
+        <span class="c-keyword">f</span><span class="c-string">"Line 2 onwards: Provide exactly 3 bullet points.\n"</span>
+        <span class="c-keyword">f</span><span class="c-string">"Text to analyze:\n{text}"</span>
+    )
+
+    response = llm.<span class="c-func">invoke</span>(prompt)
+    lines = response.content.<span class="c-func">split</span>(<span class="c-string">'\n'</span>)
+    clean_lines = [line.<span class="c-func">strip</span>() <span class="c-keyword">for</span> line <span class="c-keyword">in</span> lines <span class="c-keyword">if</span> line.<span class="c-func">strip</span>()]
+
+    summary = clean_lines[<span class="c-value">0</span>] <span class="c-keyword">if</span> clean_lines <span class="c-keyword">else</span> <span class="c-string">"No summary."</span>
+    key_points = <span class="c-string">"\n"</span>.<span class="c-func">join</span>(clean_lines[<span class="c-value">1</span>:])
+
+    <span class="c-keyword">return</span> summary, key_points
+
+<span class="c-comment"># 2. GRADIO UI SETUP</span>
+app = gr.<span class="c-func">Interface</span>(
+    fn=generate_insights,
+    inputs=gr.<span class="c-func">Textbox</span>(lines=<span class="c-value">10</span>, placeholder=<span class="c-string">"Enter your text here..."</span>, label=<span class="c-string">"Input Text"</span>),
+    outputs=[
+        gr.<span class="c-func">Textbox</span>(label=<span class="c-string">"Summary"</span>, lines=<span class="c-value">2</span>),
+        gr.<span class="c-func">Textbox</span>(label=<span class="c-string">"Key Points"</span>, lines=<span class="c-value">5</span>)
+    ],
+    title=<span class="c-string">"GenAI Text Summarizer"</span>,
+    description=<span class="c-string">"Enter text to generate a summary and key points using Google Gemini."</span>
+)
+
+<span class="c-comment"># 3. LAUNCH</span>
+app.<span class="c-func">launch</span>()</div>
+                        </div>
+                    </div>
+
+                    <!-- Gradio Component Cheat Sheet -->
+                    <div class="intuition-card" style="border-left-color: #8b5cf6; margin-top: 1.5rem;">
+                        <h3>Gradio Component Cheat Sheet</h3>
+                        <table class="comparison-table" style="margin-top: 1rem;">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Code</th>
+                                    <th>Use For</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Text</td><td><code>gr.Textbox()</code></td><td>String input/output</td></tr>
+                                <tr><td>Number</td><td><code>gr.Number()</code></td><td>Numeric input</td></tr>
+                                <tr><td>Slider</td><td><code>gr.Slider(0, 100)</code></td><td>Range selection</td></tr>
+                                <tr><td>Checkbox</td><td><code>gr.Checkbox()</code></td><td>True/False toggle</td></tr>
+                                <tr><td>Dropdown</td><td><code>gr.Dropdown(["A","B"])</code></td><td>Single selection</td></tr>
+                                <tr><td>Image</td><td><code>gr.Image()</code></td><td>Image upload/display</td></tr>
+                                <tr><td>Audio</td><td><code>gr.Audio()</code></td><td>Audio upload/play</td></tr>
+                                <tr><td>File</td><td><code>gr.File()</code></td><td>Any file upload</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button class="action-btn" style="margin-top: 1.5rem; background: #374151;" onclick="toggleFrameworkPanel('gradio')">
+                        Collapse Gradio Section
+                    </button>
+                </div>
+
+                <!-- ═══════ COMPARISON QUICK VIEW ═══════ -->
+                <div class="intuition-card" style="margin-top: 2rem; border-left-color: #8b5cf6;">
+                    <h3>Streamlit vs. Gradio: Quick Comparison</h3>
+                    <table class="comparison-table" style="margin-top: 1rem;">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Streamlit</th>
+                                <th>Gradio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Philosophy</strong></td><td>Script → Dashboard</td><td>Function → Demo</td></tr>
+                            <tr><td><strong>Core Syntax</strong></td><td><code>st.widget()</code></td><td><code>gr.Interface(fn, in, out)</code></td></tr>
+                            <tr><td><strong>Execution</strong></td><td>Re-runs entire script on interaction</td><td>Calls your function on Submit</td></tr>
+                            <tr><td><strong>Best For</strong></td><td>Dashboards, multi-page apps, data exploration</td><td>Quick AI/ML model demos, one-shot prototypes</td></tr>
+                            <tr><td><strong>Layout</strong></td><td>Sidebar, columns, tabs, expanders</td><td>Automatic split (input | output)</td></tr>
+                            <tr><td><strong>Sharing</strong></td><td>Streamlit Cloud (free)</td><td>Hugging Face Spaces (free)</td></tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <!-- Interactive Game -->
                 <div class="sim-container" style="margin-top: 2rem;">
-                    <h3>🎮 Framework Features Sort</h3>
+                    <h3>Framework Features Sort</h3>
                     <p style="margin-bottom: 1.5rem;">Drag and drop the characteristic chips exactly into the tool framework that utilizes them!</p>
                     
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
@@ -2599,92 +3068,558 @@ app.<span class="c-func">launch</span>()
                 </header>
 
                 <div class="intuition-card" style="border-left-color: #ec4899;">
-                    <h3>Handling Long Agent Loops in UI</h3>
-                    <p>Unlike our single-agent tools which take a few seconds, the Software House from Level 6 involves a massive PM &rarr; Developer &rarr; QA loop that can take <em>minutes</em> to finish. If we just leave a single spinning wheel for 3 minutes, our end-user will think the website crashed!</p>
-                    <p>Instead, we use <strong>Streamlit Status Containers</strong> to visually stream the internal "nodes" actively executing as the LangGraph transitions through the loop.</p>
+                    <h3>Putting It All Together</h3>
+                    <p>You now have all the building blocks: LangGraph workflows, LLM-powered agents, and Streamlit UIs. In this final level, we bring everything together with <strong>3 complete, production-ready projects</strong> — each one demonstrating a different multi-agent pattern.</p>
+                    <p style="margin-top: 0.8rem;">Click each project below to see its full, step-by-step implementation:</p>
                 </div>
 
-                <div class="split-layout" style="margin-top:2rem; flex-wrap: wrap;">
-                    <!-- Code Panel -->
-                    <div style="flex:1; min-width: 350px;">
-                        <h4 style="margin-bottom: 0.5rem; color:#ec4899;">The Streamlit Integration</h4>
-                        <div class="code-block" style="font-size: 0.82rem;">
-<span class="c-keyword">import</span> streamlit <span class="c-keyword">as</span> st
-<span class="c-comment"># ... (LangGraph Workflow logic) ...</span>
+                <!-- ═══════ THREE CLICKABLE PROJECT CARDS ═══════ -->
+                <div style="display: flex; gap: 1.5rem; margin-top: 2rem; flex-wrap: wrap;">
 
-user_req = st.<span class="c-func">text_area</span>(<span class="c-string">"What should we build?"</span>)
-
-<span class="c-keyword">if</span> st.<span class="c-func">button</span>(<span class="c-string">"Deploy Software House 🚀"</span>):
-    
-    <span class="c-comment"># Streamlit's awesome status UI</span>
-    <span class="c-keyword">with</span> st.<span class="c-func">status</span>(<span class="c-string">"Initializing AI Employees..."</span>, expanded=<span class="c-keyword">True</span>) <span class="c-keyword">as</span> status:
-        
-        <span class="c-comment"># We '.stream()' instead of '.invoke()'</span>
-        <span class="c-keyword">for</span> output <span class="c-keyword">in</span> graph.<span class="c-func">stream</span>({<span class="c-string">"user_request"</span>: user_req}):
-            
-            <span class="c-comment"># Capture which Node just finished</span>
-            <span class="c-keyword">for</span> key, value <span class="c-keyword">in</span> output.<span class="c-func">items</span>():
-                <span class="c-keyword">if</span> key == <span class="c-string">"pm"</span>:
-                     st.<span class="c-func">write</span>(<span class="c-string">"✅ PM generated requirements."</span>)
-                <span class="c-keyword">elif</span> key == <span class="c-string">"developer"</span>:
-                     st.<span class="c-func">write</span>(<span class="c-string">"💻 Developer wrote code."</span>)
-                <span class="c-keyword">elif</span> key == <span class="c-string">"qa"</span>:
-                     st.<span class="c-func">write</span>(<span class="c-string">"🔍 QA is reviewing code..."</span>)
-                     
-        <span class="c-comment"># Mark complete</span>
-        status.<span class="c-func">update</span>(label=<span class="c-string">"Software Done!"</span>, state=<span class="c-string">"complete"</span>)
-        
-    <span class="c-comment"># Finally, output the payload!</span>
-    st.<span class="c-func">code</span>(value[<span class="c-string">"code"</span>], language=<span class="c-string">"python"</span>)
+                    <!-- Project 1 Card -->
+                    <div class="framework-expand-card" style="flex: 1; min-width: 250px;" id="project-card-news-summariser" onclick="toggleProjectPanel('news-summariser')">
+                        <div class="framework-card-header" style="border-color: #0ea5e9;">
+                            <span class="framework-card-icon" style="font-size:1.5rem; font-weight:800; color:#0ea5e9; font-family:'Outfit',sans-serif;">P1</span>
+                            <div>
+                                <h3 style="color: #0ea5e9; margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.2rem;">News Summariser Agent</h3>
+                                <p style="color: #64748b; font-size: 0.8rem; margin-top: 0.2rem;">Single agent + tool + Streamlit</p>
+                            </div>
+                            <span class="framework-card-arrow" id="arrow-news-summariser">&#9658;</span>
                         </div>
                     </div>
 
-                    <!-- Simulator Panel -->
-                    <div style="flex:1; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); min-width: 350px;">
-                        <!-- Chrome -->
-                        <div style="background: #f1f5f9; padding: 0.5rem; border-bottom: 1px solid #e2e8f0; border-radius: 8px 8px 0 0; display: flex; gap: 0.5rem;">
-                            <div style="width:10px; height:10px; border-radius:50%; background:#ef4444;"></div>
-                            <div style="width:10px; height:10px; border-radius:50%; background:#f59e0b;"></div>
-                            <div style="width:10px; height:10px; border-radius:50%; background:#10b981;"></div>
-                            <span style="margin-left:auto; font-size: 0.7rem; color:#94a3b8;">Streamlit Live UI</span>
+                    <!-- Project 2 Card -->
+                    <div class="framework-expand-card" style="flex: 1; min-width: 250px;" id="project-card-code-review" onclick="toggleProjectPanel('code-review')">
+                        <div class="framework-card-header" style="border-color: #059669;">
+                            <span class="framework-card-icon" style="font-size:1.5rem; font-weight:800; color:#059669; font-family:'Outfit',sans-serif;">P2</span>
+                            <div>
+                                <h3 style="color: #059669; margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.2rem;">Code Review Agent</h3>
+                                <p style="color: #64748b; font-size: 0.8rem; margin-top: 0.2rem;">Two agents + conditional loop</p>
+                            </div>
+                            <span class="framework-card-arrow" id="arrow-code-review">&#9658;</span>
                         </div>
-                        
-                        <!-- App Content -->
-                        <div style="padding: 1.5rem;">
-                            <h2 style="margin-top:0; color:#1e293b; font-size:1.4rem;">🏢 AI Software House</h2>
-                            
-                            <label style="font-size: 0.8rem; font-weight: 500; display:block; margin-top:1rem;">What should we build?</label>
-                            <textarea disabled style="width: 100%; height: 60px; padding: 0.5rem; margin-top: 0.2rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; font-size: 0.85rem; color: #64748b; resize: none;">Build a python function that calculates the fibonacci sequence.</textarea>
-                            
-                            <button class="action-btn" id="sim-swe-btn" onclick="simSoftwareHouseUI()" style="margin-top: 1rem; width: 100%; border-radius: 4px; background: #3b82f6; color: white;">Deploy Software House 🚀</button>
-                            
-                            <!-- The Streamlit Status UI Mockup -->
-                            <div id="sim-swe-status-container" style="display:none; margin-top: 1.5rem; border: 1px solid #cbd5e1; border-radius: 8px; overflow:hidden;">
-                                <div id="sim-swe-status-header" style="background:#f8fafc; padding: 0.75rem; border-bottom: 1px solid #cbd5e1; display:flex; gap:0.5rem; flex-direction: column;">
-                                    <div style="display:flex; gap:0.5rem; align-items:center;">
-                                        <span id="sim-swe-spinner" class="spin" style="font-size: 1.2rem; color: #3b82f6; display:inline-block;">↻</span>
-                                        <strong id="sim-swe-status-title" style="font-size:0.9rem; color:#1e293b;">Initializing AI Employees...</strong>
-                                    </div>
-                                    <!-- Log Box -->
-                                    <div id="sim-swe-logs" style="font-family: monospace; font-size: 0.8rem; color: #475569; padding-left: 1.8rem; display:flex; flex-direction: column; gap: 0.3rem;">
-                                        <!-- Logs injected here -->
+                    </div>
+
+                    <!-- Project 3 Card -->
+                    <div class="framework-expand-card" style="flex: 1; min-width: 250px;" id="project-card-software-house" onclick="toggleProjectPanel('software-house')">
+                        <div class="framework-card-header" style="border-color: #ec4899;">
+                            <span class="framework-card-icon" style="font-size:1.5rem; font-weight:800; color:#ec4899; font-family:'Outfit',sans-serif;">P3</span>
+                            <div>
+                                <h3 style="color: #ec4899; margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.2rem;">AI Software House</h3>
+                                <p style="color: #64748b; font-size: 0.8rem; margin-top: 0.2rem;">Three agents + QA loop + streaming</p>
+                            </div>
+                            <span class="framework-card-arrow" id="arrow-software-house">&#9658;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════ -->
+                <!--  PROJECT 1: NEWS SUMMARISER AGENT              -->
+                <!-- ═══════════════════════════════════════════════ -->
+                <div class="framework-panel" id="project-panel-news-summariser" style="display:none;">
+
+                    <div class="intuition-card" style="border-left-color: #0ea5e9;">
+                        <h3>Project 1: News Summariser Agent</h3>
+                        <p>An agentic news summariser that uses <strong>real tools</strong> -- a NewsAPI tool to fetch live articles and a dedicated summariser tool. The LLM decides <em>which</em> tools to call and <em>when</em>, creating a ReAct-style loop.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Architecture:</strong> User Input &rarr; Assistant (LLM) &rarr; Tool calls (get_news / summarize_text) &rarr; Assistant &rarr; ... &rarr; Final Answer</p>
+                    </div>
+
+                    <!-- Step 1: Imports + LLM Setup -->
+                    <div class="code-card" style="margin-top: 1.5rem;">
+                        <div class="code-card-header"><span>Python &#8212; news_agent.py (Step 1: Imports + LLM Setup)</span></div>
+                        <div class="code-block"><span class="c-keyword">import</span> requests
+<span class="c-keyword">from</span> typing <span class="c-keyword">import</span> Annotated
+<span class="c-keyword">from</span> typing_extensions <span class="c-keyword">import</span> TypedDict
+<span class="c-keyword">from</span> langgraph.graph.message <span class="c-keyword">import</span> add_messages
+<span class="c-keyword">from</span> langgraph.graph <span class="c-keyword">import</span> StateGraph, START, END
+<span class="c-keyword">from</span> langchain_groq <span class="c-keyword">import</span> ChatGroq
+<span class="c-keyword">from</span> langgraph.prebuilt <span class="c-keyword">import</span> ToolNode
+<span class="c-keyword">from</span> langchain_core.tools <span class="c-keyword">import</span> tool
+<span class="c-keyword">from</span> langchain_core.messages <span class="c-keyword">import</span> SystemMessage
+
+<span class="c-comment"># 1. LLM Setup</span>
+llm = <span class="c-func">ChatGroq</span>(model=<span class="c-string">"llama-3.3-70b-versatile"</span>, temperature=<span class="c-value">0</span>, api_key=<span class="c-string">""</span>)
+<span class="c-comment"># Get API key from: console.groq.com</span></div>
+                    </div>
+
+                    <div class="observation-panel" style="margin-top: 1rem;">
+                        <strong>Why these imports?</strong>
+                        <ul class="line-by-line-list" style="margin-top: 0.5rem;">
+                            <li><code>add_messages</code> -- A LangGraph reducer that appends new messages to the state list instead of overwriting.</li>
+                            <li><code>ToolNode</code> -- A prebuilt LangGraph node that automatically executes any tool the LLM requests.</li>
+                            <li><code>@tool</code> -- Decorator that converts a Python function into a LangChain tool the LLM can call.</li>
+                            <li><code>START</code> -- The graph entry point constant (replaces <code>set_entry_point()</code>).</li>
+                        </ul>
+                    </div>
+
+                    <!-- Step 2: Define Tools -->
+                    <div class="code-card" style="margin-top: 1.5rem;">
+                        <div class="code-card-header"><span>Python &#8212; Step 2: Define the Tools</span></div>
+                        <div class="code-block"><span class="c-comment"># 2. General News Tool (fetches REAL news!)</span>
+<span class="c-decorator">@tool</span>
+<span class="c-keyword">def</span> <span class="c-func">get_news</span>(topic: <span class="c-type">str</span>) -> <span class="c-type">str</span>:
+    <span class="c-string">"""Fetches the latest news articles about a specific topic."""</span>
+    api_key = <span class="c-string">"YOUR_NEWSAPI_KEY"</span>  <span class="c-comment"># Free from newsapi.org</span>
+    url = <span class="c-keyword">f</span><span class="c-string">"https://newsapi.org/v2/everything?q={topic}&amp;apiKey={api_key}"</span>
+    data = requests.<span class="c-func">get</span>(url).<span class="c-func">json</span>()
+    <span class="c-keyword">if</span> data.<span class="c-func">get</span>(<span class="c-string">"articles"</span>):
+        <span class="c-keyword">return</span> <span class="c-string">"\n"</span>.<span class="c-func">join</span>([
+            <span class="c-keyword">f</span><span class="c-string">"Title: {a['title']}\nContent: {a['content']}"</span>
+            <span class="c-keyword">for</span> a <span class="c-keyword">in</span> data[<span class="c-string">"articles"</span>][:<span class="c-value">3</span>]
+        ])
+    <span class="c-keyword">return</span> <span class="c-keyword">f</span><span class="c-string">"No news found for {topic}."</span>
+
+<span class="c-comment"># 3. Dedicated Summarizer Tool</span>
+<span class="c-decorator">@tool</span>
+<span class="c-keyword">def</span> <span class="c-func">summarize_text</span>(text: <span class="c-type">str</span>) -> <span class="c-type">str</span>:
+    <span class="c-string">"""Summarizes a long block of text into a concise, easily readable paragraph."""</span>
+    <span class="c-comment"># Have the LLM do the heavy lifting inside the tool!</span>
+    prompt = <span class="c-keyword">f</span><span class="c-string">"Summarize this text concisely: {text}"</span>
+    <span class="c-keyword">return</span> llm.<span class="c-func">invoke</span>(prompt).content
+
+tools = [get_news, summarize_text]
+llm_with_tools = llm.<span class="c-func">bind_tools</span>(tools)</div>
+                    </div>
+
+                    <div class="observation-panel" style="margin-top: 1rem;">
+                        <strong>Key design decisions:</strong>
+                        <ul class="line-by-line-list" style="margin-top: 0.5rem;">
+                            <li><code>@tool</code> decorator -- The docstring becomes the tool's description that the LLM reads to decide when to use it.</li>
+                            <li><code>get_news</code> -- Calls the real NewsAPI to fetch live articles. The LLM <em>decides</em> to call this when it needs news data.</li>
+                            <li><code>summarize_text</code> -- A tool that internally calls the LLM again. This is a common pattern: tools can use LLMs too!</li>
+                            <li><code>bind_tools(tools)</code> -- Tells the LLM about the available tools so it can generate <code>tool_calls</code> in its response.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Step 3: Build Graph -->
+                    <div class="code-card" style="margin-top: 1.5rem;">
+                        <div class="code-card-header"><span>Python &#8212; Step 3: State + Graph Construction</span></div>
+                        <div class="code-block"><span class="c-keyword">class</span> <span class="c-type">State</span>(TypedDict):
+    messages: Annotated[<span class="c-type">list</span>, add_messages]
+
+<span class="c-comment"># Worker 1: The Assistant (Brain)</span>
+<span class="c-keyword">def</span> <span class="c-func">assistant_node</span>(state: <span class="c-type">State</span>):
+    response = llm_with_tools.<span class="c-func">invoke</span>(state[<span class="c-string">"messages"</span>])
+    <span class="c-keyword">return</span> {<span class="c-string">"messages"</span>: [response]}
+
+<span class="c-comment"># Worker 2: The Tool Runner (Hands)</span>
+tool_node = <span class="c-func">ToolNode</span>(tools)
+
+<span class="c-comment"># Routing logic: does the LLM want to use a tool?</span>
+<span class="c-keyword">def</span> <span class="c-func">should_continue</span>(state: <span class="c-type">State</span>):
+    last_msg = state[<span class="c-string">"messages"</span>][-<span class="c-value">1</span>]
+    <span class="c-keyword">if</span> <span class="c-func">getattr</span>(last_msg, <span class="c-string">"tool_calls"</span>, <span class="c-keyword">None</span>):
+        <span class="c-keyword">return</span> <span class="c-string">"tools"</span>       <span class="c-comment"># LLM wants a tool -> go to tool node</span>
+    <span class="c-keyword">return</span> END              <span class="c-comment"># No tool call -> done, stop the loop</span>
+
+<span class="c-comment"># Build the graph</span>
+builder = <span class="c-func">StateGraph</span>(<span class="c-type">State</span>)
+builder.<span class="c-func">add_node</span>(<span class="c-string">"assistant"</span>, assistant_node)
+builder.<span class="c-func">add_node</span>(<span class="c-string">"tools"</span>, tool_node)
+
+builder.<span class="c-func">add_edge</span>(START, <span class="c-string">"assistant"</span>)
+builder.<span class="c-func">add_conditional_edges</span>(<span class="c-string">"assistant"</span>, should_continue)
+builder.<span class="c-func">add_edge</span>(<span class="c-string">"tools"</span>, <span class="c-string">"assistant"</span>)
+
+graph = builder.<span class="c-func">compile</span>()</div>
+                    </div>
+
+                    <div class="observation-panel" style="margin-top: 1rem;">
+                        <strong>The ReAct loop:</strong>
+                        <ul class="line-by-line-list" style="margin-top: 0.5rem;">
+                            <li><code>assistant</code> &rarr; <code>should_continue</code> &rarr; if tool_calls, go to <code>tools</code> node; otherwise END.</li>
+                            <li><code>tools</code> node executes the tool and returns results &rarr; routes back to <code>assistant</code>.</li>
+                            <li>This creates a loop: Assistant &rarr; Tool &rarr; Assistant &rarr; Tool &rarr; ... &rarr; Final Answer.</li>
+                            <li>The LLM autonomously decides when to stop calling tools and produce a final answer.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Step 4: Run It -->
+                    <div class="code-card" style="margin-top: 1.5rem;">
+                        <div class="code-card-header"><span>Python &#8212; Step 4: Test the Agent</span></div>
+                        <div class="code-block"><span class="c-comment"># Test our News Agent!</span>
+sys_msg = <span class="c-func">SystemMessage</span>(
+    content=<span class="c-string">"You are an AI news summarizer. Use your tools to fetch and summarize news."</span>
+)
+
+initial_state = {
+    <span class="c-string">"messages"</span>: [
+        sys_msg,
+        (<span class="c-string">"user"</span>, <span class="c-string">"What is the latest news about AI Agents?"</span>)
+    ]
+}
+
+result = graph.<span class="c-func">invoke</span>(initial_state)
+<span class="c-func">print</span>(result[<span class="c-string">"messages"</span>][-<span class="c-value">1</span>].content)</div>
+                    </div>
+
+                    <div class="observation-panel" style="margin-top: 1rem;">
+                        <strong>What happens at runtime:</strong>
+                        <ul class="line-by-line-list" style="margin-top: 0.5rem;">
+                            <li>1. The user asks about "AI Agents" news.</li>
+                            <li>2. The Assistant reads the system message and decides to call <code>get_news("AI Agents")</code>.</li>
+                            <li>3. The ToolNode executes the API call and returns the raw articles.</li>
+                            <li>4. The Assistant reads the articles and decides to call <code>summarize_text(...)</code>.</li>
+                            <li>5. The ToolNode runs the summarizer and returns the summary.</li>
+                            <li>6. The Assistant produces the final answer -- no more tool calls -- so the graph ends.</li>
+                        </ul>
+                    </div>
+
+                    <div class="intuition-card" style="border-left-color: #ef4444; margin-top: 1.5rem;">
+                        <h3>Important: Step 4 OR Step 5 -- not both</h3>
+                        <p><strong>Step 4</strong> (above) is for testing in a <strong>script or Colab notebook</strong>. It uses <code>graph.invoke()</code> and prints the result to the terminal.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Step 5</strong> (below) is a <strong>Streamlit web app</strong>. It replaces Step 4 entirely -- do not combine them in the same file.</p>
+                        <p style="margin-top: 0.5rem; color: #64748b;">In practice: use Steps 1-3 + Step 4 for quick testing, then use Steps 1-3 + Step 5 when you want a proper UI.</p>
+                    </div>
+
+                    <!-- Step 5: Streamlit UI -->
+                    <div class="code-card" style="margin-top: 1.5rem;">
+                        <div class="code-card-header"><span>Python &#8212; Step 5: Wrap it in Streamlit UI</span></div>
+                        <div class="code-block"><span class="c-keyword">import</span> streamlit <span class="c-keyword">as</span> st
+
+<span class="c-comment"># Define the system message (needed since Step 4 is not included)</span>
+sys_msg = <span class="c-func">SystemMessage</span>(
+    content=<span class="c-string">"You are an AI news summarizer. Use your tools to fetch and summarize news."</span>
+)
+
+st.<span class="c-func">title</span>(<span class="c-string">"News Summariser Agent"</span>)
+st.<span class="c-func">write</span>(<span class="c-string">"Enter any topic and the AI agent will fetch real news and summarise it."</span>)
+
+topic = st.<span class="c-func">text_input</span>(<span class="c-string">"Enter news topic"</span>, placeholder=<span class="c-string">"e.g. AI Agents, Tesla, Climate Change"</span>)
+
+<span class="c-keyword">if</span> st.<span class="c-func">button</span>(<span class="c-string">"Get Summary"</span>):
+    <span class="c-keyword">if</span> <span class="c-keyword">not</span> topic.strip():
+        st.<span class="c-func">warning</span>(<span class="c-string">"Please enter a topic first."</span>)
+    <span class="c-keyword">else</span>:
+        <span class="c-comment"># Show live progress with st.status</span>
+        <span class="c-keyword">with</span> st.<span class="c-func">status</span>(<span class="c-string">"Agent is working..."</span>, expanded=<span class="c-keyword">True</span>) <span class="c-keyword">as</span> status:
+
+            initial_state = {
+                <span class="c-string">"messages"</span>: [
+                    sys_msg,
+                    (<span class="c-string">"user"</span>, <span class="c-keyword">f</span><span class="c-string">"What is the latest news about {topic}?"</span>)
+                ]
+            }
+
+            <span class="c-comment"># Stream through the graph node by node</span>
+            final_output = <span class="c-keyword">None</span>
+            <span class="c-keyword">for</span> output <span class="c-keyword">in</span> graph.<span class="c-func">stream</span>(initial_state):
+                final_output = output  <span class="c-comment"># Keep track of last output</span>
+                <span class="c-keyword">for</span> node_name <span class="c-keyword">in</span> output:
+                    st.<span class="c-func">write</span>(<span class="c-keyword">f</span><span class="c-string">"Completed: {node_name}"</span>)
+
+            status.<span class="c-func">update</span>(label=<span class="c-string">"Done!"</span>, state=<span class="c-string">"complete"</span>)
+
+        <span class="c-comment"># Display the final answer</span>
+        st.<span class="c-func">subheader</span>(<span class="c-string">"Summary"</span>)
+        <span class="c-comment"># Get the last message from the final node's output</span>
+        <span class="c-keyword">for</span> node_out <span class="c-keyword">in</span> final_output.<span class="c-func">values</span>():
+            last_msg = node_out[<span class="c-string">"messages"</span>][-<span class="c-value">1</span>]
+            st.<span class="c-func">write</span>(last_msg.content)</div>
+                    </div>
+
+                    <div class="observation-panel" style="margin-top: 1rem;">
+                        <strong>Streamlit components used:</strong>
+                        <ul class="line-by-line-list" style="margin-top: 0.5rem;">
+                            <li><code>st.text_input()</code> -- Simple text box for the user to type a topic.</li>
+                            <li><code>st.button()</code> -- Triggers the agent when clicked.</li>
+                            <li><code>st.status()</code> -- Shows a live spinner with step-by-step progress as the agent works.</li>
+                            <li><code>graph.stream()</code> -- Streams output node-by-node so the UI updates in real time.</li>
+                            <li><code>st.write()</code> -- Displays the final summarised output.</li>
+                        </ul>
+                    </div>
+
+                    <div class="intuition-card" style="border-left-color: #f59e0b; margin-top: 1rem;">
+                        <h3>graph.invoke() vs graph.stream()</h3>
+                        <p><code>graph.invoke()</code> -- Runs the entire graph and <strong>waits until all nodes finish</strong>. Returns the final state as a single dictionary. Simple, but the user sees nothing until it is done.</p>
+                        <p style="margin-top: 0.5rem;"><code>graph.stream()</code> -- Runs the graph but <strong>yields output after each node completes</strong>. This lets us update the UI in real time (e.g. "Completed: assistant", "Completed: tools"). Essential for long-running agents where you want to show live progress.</p>
+                        <p style="margin-top: 0.5rem; color: #64748b; font-size: 0.9rem;"><strong>Rule of thumb:</strong> Use <code>invoke()</code> in scripts/notebooks, use <code>stream()</code> in Streamlit/Gradio UIs.</p>
+                    </div>
+
+                    <div class="insight-card" style="margin-top: 1rem;">
+                        <span class="gold-accent">Run it:</span> <code>streamlit run news_agent.py</code>
+                    </div>
+
+                    <div class="insight-card" style="margin-top: 1rem;">
+                        <span class="gold-accent">API Keys needed:</span> Get a free Groq key from <code>console.groq.com</code> and a free NewsAPI key from <code>newsapi.org</code>
+                    </div>
+
+                </div>
+
+                <!-- ═══════════════════════════════════════════════ -->
+                <!--  PROJECT 2: CODE REVIEW AGENT                  -->
+                <!-- ═══════════════════════════════════════════════ -->
+                <div class="framework-panel" id="project-panel-code-review" style="display:none;">
+
+                    <div class="intuition-card" style="border-left-color: #059669;">
+                        <h3>Project 2: Code Review Agent</h3>
+                        <p>A two-agent workflow where one agent <strong>writes code</strong> and another <strong>reviews it</strong>. If the reviewer finds issues, the code loops back for fixes. This demonstrates <strong>conditional edges</strong> in LangGraph.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Architecture:</strong> User Input &rarr; Coder &rarr; Reviewer &rarr; (Loop back if rejected) &rarr; Display</p>
+                    </div>
+
+                    <div class="code-card" style="margin-top: 1.5rem;">
+                        <div class="code-card-header"><span>Python &#8212; code_review_agent.py (Step 1: Setup + State)</span></div>
+                        <div class="code-block"><span class="c-keyword">import</span> streamlit <span class="c-keyword">as</span> st
+<span class="c-keyword">import</span> os
+<span class="c-keyword">from</span> typing <span class="c-keyword">import</span> TypedDict
+<span class="c-keyword">from</span> langgraph.graph <span class="c-keyword">import</span> StateGraph, END
+<span class="c-keyword">from</span> langchain_google_genai <span class="c-keyword">import</span> ChatGoogleGenerativeAI
+<span class="c-keyword">from</span> langchain_core.messages <span class="c-keyword">import</span> SystemMessage, HumanMessage
+
+os.environ[<span class="c-string">'GOOGLE_API_KEY'</span>] = <span class="c-string">'YOUR_GEMINI_API_KEY'</span>
+llm = <span class="c-func">ChatGoogleGenerativeAI</span>(model=<span class="c-string">'gemini-2.0-flash'</span>)
+
+<span class="c-keyword">class</span> <span class="c-type">CodeReviewState</span>(TypedDict):
+    task: <span class="c-type">str</span>             <span class="c-comment"># What to build</span>
+    code: <span class="c-type">str</span>             <span class="c-comment"># Current code version</span>
+    review: <span class="c-type">str</span>           <span class="c-comment"># Reviewer's feedback</span>
+    approved: <span class="c-type">bool</span>        <span class="c-comment"># Pass or fail?</span>
+    iteration: <span class="c-type">int</span>        <span class="c-comment"># Track revision count</span></div>
+                    </div>
+
+                    <div class="code-card" style="margin-top: 1rem;">
+                        <div class="code-card-header"><span>Python &#8212; Step 2: Coder + Reviewer Nodes</span></div>
+                        <div class="code-block"><span class="c-keyword">def</span> <span class="c-func">coder_node</span>(state: <span class="c-type">CodeReviewState</span>) -> <span class="c-type">dict</span>:
+    feedback = state.get(<span class="c-string">"review"</span>, <span class="c-string">"None &#8212; first attempt."</span>)
+    prompt = <span class="c-keyword">f</span><span class="c-string">"""Task: {state['task']}
+Previous reviewer feedback: {feedback}
+Write clean Python code with docstrings and type hints."""</span>
+
+    response = llm.<span class="c-func">invoke</span>([
+        <span class="c-func">SystemMessage</span>(content=<span class="c-string">"You are a Python developer. Return ONLY code."</span>),
+        <span class="c-func">HumanMessage</span>(content=prompt)
+    ])
+    <span class="c-keyword">return</span> {<span class="c-string">"code"</span>: response.content, <span class="c-string">"iteration"</span>: state.get(<span class="c-string">"iteration"</span>, <span class="c-value">0</span>) + <span class="c-value">1</span>}
+
+<span class="c-keyword">def</span> <span class="c-func">reviewer_node</span>(state: <span class="c-type">CodeReviewState</span>) -> <span class="c-type">dict</span>:
+    prompt = <span class="c-keyword">f</span><span class="c-string">"""Review this code:
+{state['code']}
+Check: correctness, edge cases, code style, docstrings.
+If passes all checks, respond EXACTLY: APPROVED
+Otherwise, explain what needs fixing."""</span>
+
+    response = llm.<span class="c-func">invoke</span>([
+        <span class="c-func">SystemMessage</span>(content=<span class="c-string">"You are a strict code reviewer."</span>),
+        <span class="c-func">HumanMessage</span>(content=prompt)
+    ])
+    is_approved = <span class="c-string">"APPROVED"</span> <span class="c-keyword">in</span> response.content.upper()
+    <span class="c-keyword">return</span> {<span class="c-string">"review"</span>: response.content, <span class="c-string">"approved"</span>: is_approved}</div>
+                    </div>
+
+                    <div class="code-card" style="margin-top: 1rem;">
+                        <div class="code-card-header"><span>Python &#8212; Step 3: Build Graph with Loop</span></div>
+                        <div class="code-block"><span class="c-keyword">def</span> <span class="c-func">should_revise</span>(state: <span class="c-type">CodeReviewState</span>) -> <span class="c-type">str</span>:
+    <span class="c-keyword">if</span> state[<span class="c-string">"approved"</span>] <span class="c-keyword">or</span> state.get(<span class="c-string">"iteration"</span>, <span class="c-value">0</span>) >= <span class="c-value">3</span>:
+        <span class="c-keyword">return</span> <span class="c-string">"end"</span>       <span class="c-comment"># Approved or max 3 iterations</span>
+    <span class="c-keyword">return</span> <span class="c-string">"coder"</span>      <span class="c-comment"># Send back for revision</span>
+
+workflow = <span class="c-func">StateGraph</span>(<span class="c-type">CodeReviewState</span>)
+workflow.<span class="c-func">add_node</span>(<span class="c-string">"coder"</span>, coder_node)
+workflow.<span class="c-func">add_node</span>(<span class="c-string">"reviewer"</span>, reviewer_node)
+
+workflow.<span class="c-func">set_entry_point</span>(<span class="c-string">"coder"</span>)
+workflow.<span class="c-func">add_edge</span>(<span class="c-string">"coder"</span>, <span class="c-string">"reviewer"</span>)
+workflow.<span class="c-func">add_conditional_edges</span>(
+    <span class="c-string">"reviewer"</span>, should_revise,
+    {<span class="c-string">"coder"</span>: <span class="c-string">"coder"</span>, <span class="c-string">"end"</span>: END}
+)
+graph = workflow.<span class="c-func">compile</span>()</div>
+                    </div>
+
+                    <div class="code-card" style="margin-top: 1rem;">
+                        <div class="code-card-header"><span>Python &#8212; Step 4: Streamlit UI</span></div>
+                        <div class="code-block">st.<span class="c-func">title</span>(<span class="c-string">"Code Review Agent"</span>)
+st.<span class="c-func">write</span>(<span class="c-string">"Describe a coding task. The Coder writes it, the Reviewer checks it."</span>)
+
+task = st.<span class="c-func">text_area</span>(<span class="c-string">"Coding Task"</span>, placeholder=<span class="c-string">"e.g. Write a function to validate email addresses"</span>, height=<span class="c-value">80</span>)
+
+<span class="c-keyword">if</span> st.<span class="c-func">button</span>(<span class="c-string">"Run Code Review"</span>):
+    <span class="c-keyword">if</span> <span class="c-keyword">not</span> task.strip():
+        st.<span class="c-func">warning</span>(<span class="c-string">"Please describe a task."</span>)
+    <span class="c-keyword">else</span>:
+        <span class="c-keyword">with</span> st.<span class="c-func">status</span>(<span class="c-string">"Coder is writing..."</span>, expanded=<span class="c-keyword">True</span>) <span class="c-keyword">as</span> status:
+            final_code = <span class="c-string">""</span>
+            <span class="c-keyword">for</span> output <span class="c-keyword">in</span> graph.<span class="c-func">stream</span>({<span class="c-string">"task"</span>: task}):
+                <span class="c-keyword">for</span> node_name, node_out <span class="c-keyword">in</span> output.<span class="c-func">items</span>():
+                    <span class="c-keyword">if</span> node_name == <span class="c-string">"coder"</span>:
+                        iteration = node_out.get(<span class="c-string">"iteration"</span>, <span class="c-value">1</span>)
+                        st.<span class="c-func">write</span>(<span class="c-keyword">f</span><span class="c-string">"Coder wrote version {iteration}."</span>)
+                        final_code = node_out[<span class="c-string">"code"</span>]
+                    <span class="c-keyword">elif</span> node_name == <span class="c-string">"reviewer"</span>:
+                        <span class="c-keyword">if</span> node_out[<span class="c-string">"approved"</span>]:
+                            st.<span class="c-func">write</span>(<span class="c-string">"Reviewer APPROVED."</span>)
+                        <span class="c-keyword">else</span>:
+                            st.<span class="c-func">write</span>(<span class="c-string">"Reviewer REJECTED &#8212; sending back..."</span>)
+            status.<span class="c-func">update</span>(label=<span class="c-string">"Review Complete!"</span>, state=<span class="c-string">"complete"</span>)
+
+        st.<span class="c-func">subheader</span>(<span class="c-string">"Final Code"</span>)
+        st.<span class="c-func">code</span>(final_code, language=<span class="c-string">"python"</span>)
+        <span class="c-keyword">with</span> st.<span class="c-func">expander</span>(<span class="c-string">"View Reviewer Feedback"</span>):
+            st.<span class="c-func">write</span>(node_out[<span class="c-string">"review"</span>])</div>
+                    </div>
+
+                    <div class="observation-panel" style="margin-top: 1rem;">
+                        <strong>Architecture pattern:</strong> This is a <strong>conditional loop</strong> &#8212; Coder &rarr; Reviewer &rarr; (back to Coder if rejected). A max iteration cap of 3 prevents infinite loops.
+                    </div>
+
+                    <div class="insight-card" style="margin-top: 1rem;">
+                        <span class="gold-accent">Run it:</span> <code>streamlit run code_review_agent.py</code>
+                    </div>
+
+
+                </div>
+
+                <!-- ═══════════════════════════════════════════════ -->
+                <!--  PROJECT 3: AI SOFTWARE HOUSE                  -->
+                <!-- ═══════════════════════════════════════════════ -->
+                <div class="framework-panel" id="project-panel-software-house" style="display:none;">
+
+                    <div class="intuition-card" style="border-left-color: #ec4899;">
+                        <h3>Project 3: AI Software House</h3>
+                        <p>The most complex project &#8212; a <strong>three-agent team</strong> (PM, Developer, QA) connected via a LangGraph workflow with a conditional QA approval loop. The Streamlit UI streams live progress as each agent works.</p>
+                        <p style="margin-top: 0.5rem;"><strong>Architecture:</strong> User Input &rarr; PM &rarr; Developer &rarr; QA &rarr; (Loop to Developer if rejected) &rarr; Display</p>
+                    </div>
+
+                    <div class="code-card" style="margin-top: 1.5rem;">
+                        <div class="code-card-header"><span>Python &#8212; software_house_app.py (Step 1: Imports + State)</span></div>
+                        <div class="code-block"><span class="c-keyword">import</span> streamlit <span class="c-keyword">as</span> st
+<span class="c-keyword">import</span> os
+<span class="c-keyword">from</span> typing <span class="c-keyword">import</span> TypedDict
+<span class="c-keyword">from</span> langgraph.graph <span class="c-keyword">import</span> StateGraph, END
+<span class="c-keyword">from</span> langchain_google_genai <span class="c-keyword">import</span> ChatGoogleGenerativeAI
+<span class="c-keyword">from</span> langchain_core.messages <span class="c-keyword">import</span> SystemMessage, HumanMessage
+
+os.environ[<span class="c-string">'GOOGLE_API_KEY'</span>] = <span class="c-string">'YOUR_GEMINI_API_KEY'</span>
+llm = <span class="c-func">ChatGoogleGenerativeAI</span>(model=<span class="c-string">'gemini-2.0-flash'</span>)
+
+<span class="c-keyword">class</span> <span class="c-type">SoftwareState</span>(TypedDict):
+    user_request: <span class="c-type">str</span>
+    requirements: <span class="c-type">str</span>
+    code: <span class="c-type">str</span>
+    review: <span class="c-type">str</span>
+    approved: <span class="c-type">bool</span></div>
+                    </div>
+
+                    <div class="code-card" style="margin-top: 1rem;">
+                        <div class="code-card-header"><span>Python &#8212; Step 2: PM + Developer + QA Nodes</span></div>
+                        <div class="code-block"><span class="c-keyword">def</span> <span class="c-func">pm_node</span>(state):
+    response = llm.<span class="c-func">invoke</span>([
+        <span class="c-func">SystemMessage</span>(content=<span class="c-string">"You are a senior PM. Convert the user's request into numbered technical requirements."</span>),
+        <span class="c-func">HumanMessage</span>(content=state[<span class="c-string">"user_request"</span>])
+    ])
+    <span class="c-keyword">return</span> {<span class="c-string">"requirements"</span>: response.content}
+
+<span class="c-keyword">def</span> <span class="c-func">developer_node</span>(state):
+    prompt = <span class="c-keyword">f</span><span class="c-string">"""Requirements: {state['requirements']}
+QA Feedback: {state.get('review', 'None')}
+Write production-ready Python code."""</span>
+    response = llm.<span class="c-func">invoke</span>([
+        <span class="c-func">SystemMessage</span>(content=<span class="c-string">"You are a senior Python developer. Return ONLY code."</span>),
+        <span class="c-func">HumanMessage</span>(content=prompt)
+    ])
+    <span class="c-keyword">return</span> {<span class="c-string">"code"</span>: response.content}
+
+<span class="c-keyword">def</span> <span class="c-func">qa_node</span>(state):
+    prompt = <span class="c-keyword">f</span><span class="c-string">"""Requirements: {state['requirements']}
+Code: {state['code']}
+If code meets ALL requirements, respond EXACTLY: APPROVED
+Otherwise, explain what needs fixing."""</span>
+    response = llm.<span class="c-func">invoke</span>([
+        <span class="c-func">SystemMessage</span>(content=<span class="c-string">"You are a strict QA engineer."</span>),
+        <span class="c-func">HumanMessage</span>(content=prompt)
+    ])
+    is_approved = <span class="c-string">"APPROVED"</span> <span class="c-keyword">in</span> response.content.upper()
+    <span class="c-keyword">return</span> {<span class="c-string">"review"</span>: response.content, <span class="c-string">"approved"</span>: is_approved}</div>
+                    </div>
+
+                    <div class="code-card" style="margin-top: 1rem;">
+                        <div class="code-card-header"><span>Python &#8212; Step 3: Graph with Conditional Loop</span></div>
+                        <div class="code-block"><span class="c-keyword">def</span> <span class="c-func">should_continue</span>(state):
+    <span class="c-keyword">if</span> state[<span class="c-string">"approved"</span>]: <span class="c-keyword">return</span> <span class="c-string">"end"</span>
+    <span class="c-keyword">return</span> <span class="c-string">"developer"</span>
+
+workflow = <span class="c-func">StateGraph</span>(<span class="c-type">SoftwareState</span>)
+workflow.<span class="c-func">add_node</span>(<span class="c-string">"pm"</span>, pm_node)
+workflow.<span class="c-func">add_node</span>(<span class="c-string">"developer"</span>, developer_node)
+workflow.<span class="c-func">add_node</span>(<span class="c-string">"qa"</span>, qa_node)
+
+workflow.<span class="c-func">set_entry_point</span>(<span class="c-string">"pm"</span>)
+workflow.<span class="c-func">add_edge</span>(<span class="c-string">"pm"</span>, <span class="c-string">"developer"</span>)
+workflow.<span class="c-func">add_edge</span>(<span class="c-string">"developer"</span>, <span class="c-string">"qa"</span>)
+workflow.<span class="c-func">add_conditional_edges</span>(
+    <span class="c-string">"qa"</span>, should_continue,
+    {<span class="c-string">"developer"</span>: <span class="c-string">"developer"</span>, <span class="c-string">"end"</span>: END}
+)
+graph = workflow.<span class="c-func">compile</span>()</div>
+                    </div>
+
+                    <div class="code-card" style="margin-top: 1rem;">
+                        <div class="code-card-header"><span>Python &#8212; Step 4: Streamlit Streaming UI</span></div>
+                        <div class="code-block">st.<span class="c-func">title</span>(<span class="c-string">"AI Software House"</span>)
+st.<span class="c-func">write</span>(<span class="c-string">"A multi-agent team: PM, Developer, and QA."</span>)
+
+user_req = st.<span class="c-func">text_area</span>(<span class="c-string">"What should we build?"</span>, height=<span class="c-value">100</span>)
+
+<span class="c-keyword">if</span> st.<span class="c-func">button</span>(<span class="c-string">"Deploy Software House"</span>):
+    <span class="c-keyword">if</span> <span class="c-keyword">not</span> user_req.strip():
+        st.<span class="c-func">warning</span>(<span class="c-string">"Please enter a request."</span>)
+    <span class="c-keyword">else</span>:
+        <span class="c-keyword">with</span> st.<span class="c-func">status</span>(<span class="c-string">"Initializing AI Employees..."</span>, expanded=<span class="c-keyword">True</span>) <span class="c-keyword">as</span> status:
+            final_code = <span class="c-string">""</span>
+            <span class="c-keyword">for</span> output <span class="c-keyword">in</span> graph.<span class="c-func">stream</span>({<span class="c-string">"user_request"</span>: user_req}):
+                <span class="c-keyword">for</span> node_name, node_out <span class="c-keyword">in</span> output.<span class="c-func">items</span>():
+                    <span class="c-keyword">if</span> node_name == <span class="c-string">"pm"</span>:
+                        st.<span class="c-func">write</span>(<span class="c-string">"PM generated requirements."</span>)
+                        <span class="c-keyword">with</span> st.<span class="c-func">expander</span>(<span class="c-string">"View Requirements"</span>):
+                            st.<span class="c-func">write</span>(node_out[<span class="c-string">"requirements"</span>])
+                    <span class="c-keyword">elif</span> node_name == <span class="c-string">"developer"</span>:
+                        st.<span class="c-func">write</span>(<span class="c-string">"Developer wrote code."</span>)
+                        final_code = node_out[<span class="c-string">"code"</span>]
+                    <span class="c-keyword">elif</span> node_name == <span class="c-string">"qa"</span>:
+                        <span class="c-keyword">if</span> node_out[<span class="c-string">"approved"</span>]:
+                            st.<span class="c-func">write</span>(<span class="c-string">"QA APPROVED."</span>)
+                        <span class="c-keyword">else</span>:
+                            st.<span class="c-func">write</span>(<span class="c-string">"QA REJECTED &#8212; looping back..."</span>)
+            status.<span class="c-func">update</span>(label=<span class="c-string">"Software House Complete!"</span>, state=<span class="c-string">"complete"</span>)
+
+        st.<span class="c-func">subheader</span>(<span class="c-string">"Final Code Output"</span>)
+        st.<span class="c-func">code</span>(final_code, language=<span class="c-string">"python"</span>)</div>
+                    </div>
+
+                    <div class="observation-panel" style="margin-top: 1rem;">
+                        <strong>Architecture pattern:</strong> This is a <strong>three-node conditional loop</strong> &#8212; PM &rarr; Dev &rarr; QA &rarr; (back to Dev if rejected). The most complex workflow in this course.
+                    </div>
+
+                    <div class="insight-card" style="margin-top: 1rem;">
+                        <span class="gold-accent">Run it:</span> <code>streamlit run software_house_app.py</code>
+                    </div>
+
+                    <!-- Live Simulator -->
+                    <div style="margin-top: 2rem;">
+                        <h4 style="margin-bottom: 0.5rem; color: #ec4899;">Live Simulator &#8212; Try It</h4>
+                        <div style="border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+                            <div style="background: #f1f5f9; padding: 0.5rem; border-bottom: 1px solid #e2e8f0; border-radius: 8px 8px 0 0; display: flex; gap: 0.5rem;">
+                                <div style="width:10px; height:10px; border-radius:50%; background:#ef4444;"></div>
+                                <div style="width:10px; height:10px; border-radius:50%; background:#f59e0b;"></div>
+                                <div style="width:10px; height:10px; border-radius:50%; background:#10b981;"></div>
+                                        </div>
+                                        <div id="sim-swe-logs" style="font-family: monospace; font-size: 0.8rem; color: #475569; padding-left: 1.8rem; display:flex; flex-direction: column; gap: 0.3rem;"></div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div id="sim-swe-final-code" style="display:none; margin-top: 1.5rem;">
-                                <div style="background:#1e293b; color: #e2e8f0; padding:1rem; border-radius:8px; font-family:monospace; font-size:0.85rem; white-space:pre-wrap;">def fibonacci(n):
-    if n <= 0: return []
+                                <div id="sim-swe-final-code" style="display:none; margin-top: 1.5rem;">
+                                    <div style="background:#f8fafc; color: #1f2937; padding:1rem; border-radius:8px; font-family:monospace; font-size:0.85rem; white-space:pre-wrap; border: 1px solid #d1d5db;">def fibonacci(n):
+    if n &lt;= 0: return []
     elif n == 1: return [0]
     
     sequence = [0, 1]
-    while len(sequence) < n:
+    while len(sequence) &lt; n:
         sequence.append(sequence[-1] + sequence[-2])
     return sequence</div>
+                                </div>
                             </div>
-
                         </div>
                     </div>
+
                 </div>
 
                 <div style="margin-top: 3rem; text-align: center;">

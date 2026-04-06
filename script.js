@@ -1216,6 +1216,41 @@ function dropFramework(ev) {
 }
 
 // ==========================================
+// LEVEL 10: Expandable Framework Panels
+// ==========================================
+function toggleFrameworkPanel(framework) {
+    const panel = document.getElementById(`panel-${framework}`);
+    const card = document.getElementById(`card-${framework}`);
+    const otherFramework = framework === 'streamlit' ? 'gradio' : 'streamlit';
+    const otherPanel = document.getElementById(`panel-${otherFramework}`);
+    const otherCard = document.getElementById(`card-${otherFramework}`);
+
+    // If clicking the same card that's already open, close it
+    if (panel.style.display === 'block') {
+        panel.style.display = 'none';
+        card.classList.remove('active-card');
+        return;
+    }
+
+    // Close the other panel if open
+    if (otherPanel) {
+        otherPanel.style.display = 'none';
+        otherCard.classList.remove('active-card');
+    }
+
+    // Open this panel
+    panel.style.display = 'block';
+    card.classList.add('active-card');
+
+    // Scroll to the panel smoothly
+    setTimeout(() => {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+
+    addXP(10, `l10-explore-${framework}`);
+}
+
+// ==========================================
 // LEVEL 11: Single-Agent UIs
 // ==========================================
 function simCryptoStreamlit() {
@@ -1294,6 +1329,41 @@ function simSoftwareHouseUI() {
         document.getElementById('final-graduation-btn').style.display = 'inline-block';
         addXP(50, 'l12-software-house');
     }, 11500);
+}
+
+// ==========================================
+// LEVEL 12: Expandable Project Panels
+// ==========================================
+function toggleProjectPanel(projectId) {
+    const allProjects = ['news-summariser', 'code-review', 'software-house'];
+    const panel = document.getElementById(`project-panel-${projectId}`);
+    const card = document.getElementById(`project-card-${projectId}`);
+
+    // If clicking the same card that's already open, close it
+    if (panel.style.display === 'block') {
+        panel.style.display = 'none';
+        card.classList.remove('active-card');
+        return;
+    }
+
+    // Close all other panels
+    allProjects.forEach(pid => {
+        const p = document.getElementById(`project-panel-${pid}`);
+        const c = document.getElementById(`project-card-${pid}`);
+        if (p) { p.style.display = 'none'; }
+        if (c) { c.classList.remove('active-card'); }
+    });
+
+    // Open this panel
+    panel.style.display = 'block';
+    card.classList.add('active-card');
+
+    // Scroll to the panel smoothly
+    setTimeout(() => {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+
+    addXP(10, `l12-explore-${projectId}`);
 }
 
 function triggerGraduation() {
